@@ -101,6 +101,56 @@ INSERT INTO Bookings (booking_id, user_id, match_id, seat_number, payment_status
 
 --QUERIES ANSWERS STARTS FROM HERE
 
+--1
+Select match_id , fixture, base_ticket_price from
+matches where tournament_category = 'Champions League' and
+match_status = 'Available'
+
+
+
+--2
+Select user_id, full_name, email from users
+where full_name ILIKE 'Tanvir%' or full_name ILIKE '%haque%'
+
+
+
+
+--3
+Select booking_id, user_id , match_id,
+ coalesce(payment_status, 'Action Required') as systematic_status
+ from bookings where payment_status is null;
+
+
+
+--4
+Select booking_id ,full_name, fixture, total_cost
+from bookings b inner join users u on b.user_id=u.user_id
+inner join matches m on b.match_id=m.match_id 
+
+
+
+
+--5
+Select u.user_id, full_name, b.booking_id
+from users u left join bookings b on u.user_id = b.user_id
+
+
+
+
+--6
+Select booking_id, match_id, total_cost 
+  from bookings where total_cost>(
+  select avg(total_cost) from bookings 
+)
+
+
+
+
+--7
+Select match_id, fixture,base_ticket_price from matches
+ order by base_ticket_price desc limit 2 offset 1
+
+
 
 
 
